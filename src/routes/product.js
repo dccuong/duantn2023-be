@@ -5,7 +5,7 @@ import { isAdmin, isAuth, requireSignin } from "../middlewares/checkAuth";
 const router = Router();
 
 router.get("/product", list);
-// router.get("/product/:id/comment", getComment);
+router.get("/product/:id/comment", getComment);
 router.get("/product/:slug/getRelated", getRelated);
 router.get("/product/:slug/getBySlug", getBySlug);
 router.get("/product/search", search);

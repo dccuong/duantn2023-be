@@ -1,6 +1,6 @@
 import slugify from "slugify";
 import Product from "../models/product";
-// import Comment from "../models/comment";
+import Comment from "../models/comments";
 
 export const create = async (req, res) => {
   const slug = slugify(req.body.name, {
@@ -12,6 +12,7 @@ export const create = async (req, res) => {
     const products = await new Product(req.body).save();
     res.json(products);
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       message: "khong them duoc du lieu",
     });
@@ -19,7 +20,7 @@ export const create = async (req, res) => {
 };
 export const list = async (req, res) => {
   try {
-    const products = await Product.find({}).populate("catygoryId").sort("-createdAt").exec();
+    const products = await Product.find({}).sort("-createdAt").exec();
     res.json(products);
   } catch (error) {
     res.status(400).json({
@@ -73,20 +74,20 @@ export const search = async (req, res) => {
     });
   }
 };
-// export const getComment = async (req, res) => {
-//   try {
-//     const product = await Product.findOne({ _id: req.params.id }).exec();
-//     const comments = await Comment.find({ productId: product._id });
-//     res.json({
-//       product,
-//       comments,
-//     });
-//   } catch (error) {
-//     res.status(400).json({
-//       message: "Không hiển thị được danh sách",
-//     });
-//   }
-// };
+export const getComment = async (req, res) => {
+  try {
+    const product = await Product.findOne({ _id: req.params.id }).exec();
+    const comments = await Comment.find({ productId: product._id });
+    res.json({
+      product,
+      comments,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Không hiển thị được danh sách",
+    });
+  }
+};
 
 export const getRelated = async (req, res) => {
   try {

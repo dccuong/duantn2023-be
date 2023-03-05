@@ -18,10 +18,14 @@ const ProductSchema = new Schema(
       type: String,
       require: true,
     },
-    // catygoryId: {
-    //   type: ObjectId,
-    //   ref: "Cateproduct",
-    // },
+    categoryId: {
+      type: [ObjectId],
+      ref: "Cateproduct",
+    },
+    sliderId: {
+      type: ObjectId,
+      ref: "Slider",
+    },
     slug: {
       type: String,
     },
