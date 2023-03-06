@@ -10,6 +10,7 @@ export const create = async (req, res) => {
   req.body.slug = slug;
   try {
     const products = await new Product(req.body).save();
+    console.log(products,"S")
     res.json(products);
   } catch (error) {
     console.log(error);

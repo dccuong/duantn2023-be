@@ -6,10 +6,6 @@ const ProductSchema = new Schema(
       require: true,
       minlength: 3,
     },
-    image: {
-      type: String,
-      require: true,
-    },
     price: {
       type: String,
       require: true,
@@ -22,10 +18,11 @@ const ProductSchema = new Schema(
       type: [ObjectId],
       ref: "Cateproduct",
     },
-    sliderId: {
+    imgPrdId: {
       type: ObjectId,
-      ref: "Slider",
+      ref: "imgPrdSchema",
     },
+
     slug: {
       type: String,
     },
