@@ -20,6 +20,7 @@
     "express-jwt": "^7.7.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.5",
+    "paypal-rest-sdk": "^1.8.1",
     "slugify": "^1.6.5"
   },
   "devDependencies": {

@@ -31,7 +31,7 @@ export const remove = async (req, res) => {
 };
 export const create = async (req, res) => {
   try {
-    const slider = await new Slider(req.body).save();
+    const slider = await new imgPrdSchema(req.body).save();
     res.json(slider);
   } catch (error) {
     res.status(400).json({

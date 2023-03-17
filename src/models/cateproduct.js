@@ -8,7 +8,6 @@ const cateproductSchema = new Schema(
     },
     image: {
       type: String,
-      require: true,
     },
     slug: {
       type: String,

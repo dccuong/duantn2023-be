@@ -10,7 +10,7 @@ router.get("/product/:slug/getRelated", getRelated);
 router.get("/product/:slug/getBySlug", getBySlug);
 router.get("/product/search", search);
 router.get("/product/:id", read);
-router.delete("/product/:id", requireSignin, isAuth, isAdmin, remove);
+router.delete("/product/:id", remove);
 router.post("/product",create);
 router.put("/product/:id", requireSignin, isAuth, isAdmin, update);
 

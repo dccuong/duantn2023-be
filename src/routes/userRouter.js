@@ -8,7 +8,7 @@ router.post("/users", create);
 router.get("/users", getAll);
 router.get("/users/:id", get);
 router.put("/users/changepassword/:id", requireSignin, isAuth, changePassword);
-router.put("/users/:id", requireSignin, isAuth, isAdmin, update);
+router.put("/users/:id",  update);
 router.delete("/users/:id", requireSignin, isAuth, isAdmin, remove);
 
 module.exports = router;
