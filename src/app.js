@@ -4,7 +4,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import { readdirSync } from "fs";
 require("dotenv").config();
-
+const paypal = require('paypal-rest-sdk');
 const app = express();
 
 // middleware
@@ -16,7 +16,11 @@ app.use(express.json());
 readdirSync("./src/routes").forEach((route) => {
   app.use("/api", require(`./routes/${route}`));
 });
-
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': '####yourclientid######',
+  'client_secret': '####yourclientsecret#####'
+});
 // connect db
 // mongoose
 //   .connect(process.env.DB_URL)
