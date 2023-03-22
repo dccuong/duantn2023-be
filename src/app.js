@@ -21,15 +21,15 @@ paypal.configure({
   'client_id': '####yourclientid######',
   'client_secret': '####yourclientsecret#####'
 });
-// connect db
-// mongoose
-//   .connect(process.env.DB_URL)
-//   .then(() => console.log("Connect successfully"))
-//   .catch((error) => console.log(error));
-mongoose.set("strictQuery", false);
+
 mongoose
-  .connect("mongodb://127.0.0.1:27017/duantn2023")
+  .connect(process.env.DB_URL)
   .then(() => console.log("Connect successfully"))
   .catch((error) => console.log(error));
+mongoose.set("strictQuery", false);
+// mongoose
+//   .connect("mongodb://127.0.0.1:27017/duantn2023")
+//   .then(() => console.log("Connect successfully"))
+//   .catch((error) => console.log(error));
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log("Server is running on port", PORT));
