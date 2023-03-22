@@ -1,4 +1,4 @@
-import Size from "../models/Size";
+import Size from "../models/size";
 export const create = async (req, res) => {
   try {
     const sizename = await new Size(req.body).save();
