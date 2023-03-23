@@ -18,11 +18,11 @@ router.post('/create_payment_url', function (req, res, next) {
 
     var tmnCode = 'GXVW14C1';
     var secretKey = 'ZPTGSZUBDGKRWWSRAEPICFEUDQSOUJMO';
-    var returnUrl = 'https://duantn2023.onrender.com/';
+    var returnUrl = 'https%3A%2F%2Fvercel.com%2Fdccuong%2Fduantn2023%2FFJsLY6UxD2sRvvQe5tdFzcvvZsfY';
 
     var createDate = dateFormat(date, 'yyyymmddHHmmss');
     var orderId = dateFormat(date, 'HHmmss');
-    var amount = req.body.amount;
+    console.log(req.body.amuont, "ssss")
     var bankCode = req.body.bankCode;
 
     var orderInfo = req.body.orderDescription;
@@ -42,28 +42,25 @@ router.post('/create_payment_url', function (req, res, next) {
     vnp_Params['vnp_TxnRef'] = orderId;
     vnp_Params['vnp_OrderInfo'] = orderInfo;
     vnp_Params['vnp_OrderType'] = orderType;
-    vnp_Params['vnp_Amount'] = amount*100;
+    vnp_Params['vnp_Amount'] = String(req.body.amuont * 100);
+    console.log(vnp_Params['vnp_Amount'])
     vnp_Params['vnp_ReturnUrl'] = returnUrl;
     vnp_Params['vnp_IpAddr'] = ipAddr;
     vnp_Params['vnp_CreateDate'] = createDate;
     if (bankCode !== null && bankCode !== '') {
         vnp_Params['vnp_BankCode'] = bankCode;
     }
-
     vnp_Params = sortObject(vnp_Params);
     var qs = require('qs');
     var signData = qs.stringify(vnp_Params, { encode: false });
-    console.log(signData, "signD")
     var crypto = require("crypto");
     var hmac = crypto.createHmac("sha512", secretKey);
     var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
-    console.log(signed, "sss")
     vnp_Params['vnp_SecureHash'] = signed;
     let vnpUrl
     vnpUrl = ('?' + qs.stringify(vnp_Params, { encode: false }))
-    
-    console.log(vnpUrl, "vnpUr")
-    res.redirect(vnpUrl)
+    console.log(vnpUrl,"vnpUrl")
+     res.redirect(vnpUrl)
 });
 router.get('/vnpay_ipn', function (req, res, next) {
     var vnp_Params = req.query;
@@ -80,7 +77,6 @@ router.get('/vnpay_ipn', function (req, res, next) {
     var crypto = require("crypto");
     var hmac = crypto.createHmac("sha512", secretKey);
     var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
-
 
     if (secureHash === signed) {
         var orderId = vnp_Params['vnp_TxnRef'];
