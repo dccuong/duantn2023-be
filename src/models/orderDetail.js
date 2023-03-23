@@ -1,4 +1,5 @@
 import mongoose, { Schema, ObjectId } from "mongoose";
+import { boolean } from "webidl-conversions";
 
 const orderDetailSchema = new Schema(
   {
@@ -16,6 +17,10 @@ const orderDetailSchema = new Schema(
     },
     quantity: {
       type: Number,
+      require: true,
+    },
+    pay: {
+      type: Boolean,
       require: true,
     },
   },

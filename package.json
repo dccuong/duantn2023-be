@@ -15,13 +15,18 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
     "cors": "^2.8.5",
+    "create-hmac": "^1.1.7",
+    "crypto-js": "^4.1.1",
+    "dateformat": "^4.6.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-jwt": "^7.7.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.5",
     "paypal-rest-sdk": "^1.8.1",
-    "slugify": "^1.6.5"
+    "qs": "^6.11.1",
+    "slugify": "^1.6.5",
+    "sortobject": "^4.16.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
