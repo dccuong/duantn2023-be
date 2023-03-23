@@ -18,7 +18,7 @@ router.post('/create_payment_url', function (req, res, next) {
 
     var tmnCode = 'GXVW14C1';
     var secretKey = 'ZPTGSZUBDGKRWWSRAEPICFEUDQSOUJMO';
-    var returnUrl = 'https://domain.vn/VnPayReturn';
+    var returnUrl = 'https://duantn2023.onrender.com/';
 
     var createDate = dateFormat(date, 'yyyymmddHHmmss');
     var orderId = dateFormat(date, 'HHmmss');
