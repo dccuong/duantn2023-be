@@ -22,8 +22,8 @@ export const list = async (req, res) => {
 };
 export const read = async (req, res) => {
   try {
-    const Size = await Size.findOne({ _id: req.params.id }).exec();
-    res.json(Size);
+    const size = await Size.findOne({ _id: req.params.id }).exec();
+    res.json(size);
   } catch (error) {
     res.status(400).json({
       message: "khong hien thi",

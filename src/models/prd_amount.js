@@ -10,10 +10,6 @@ const ProductSchema = new Schema(
       type: ObjectId,
       ref: "Product",
     },
-    size_id: {
-      type: ObjectId,
-      ref: "Size",
-    },
     color: {
       type: ObjectId,
       ref: "Color",
