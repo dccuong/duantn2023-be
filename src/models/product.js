@@ -23,7 +23,6 @@ const ProductSchema = new Schema(
     },
     size: {
       type: String,
-      require: true,
     },
     imgPrdId: {
       type: ObjectId,
