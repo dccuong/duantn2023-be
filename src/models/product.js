@@ -21,6 +21,10 @@ const ProductSchema = new Schema(
       type: ObjectId,
       ref: "Cateproduct",
     },
+    size: {
+      type: String,
+      require: true,
+    },
     imgPrdId: {
       type: ObjectId,
       ref: "imgPrdSchema",
