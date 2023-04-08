@@ -28,6 +28,9 @@ const ProductSchema = new Schema(
       type: ObjectId,
       ref: "imgPrdSchema",
     },
+    buy: {
+      type: String,
+    },
 
     slug: {
       type: String,
