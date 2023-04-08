@@ -12,6 +12,6 @@ router.get("/product/search", search);
 router.get("/product/:id", read);
 router.delete("/product/:id", remove);
 router.post("/product",create);
-router.put("/product/:id", requireSignin, isAuth, isAdmin, update);
+router.put("/product/:id", update);
 
 module.exports = router;
