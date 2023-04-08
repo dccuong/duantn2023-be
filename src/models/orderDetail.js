@@ -19,6 +19,9 @@ const orderDetailSchema = new Schema(
       type: Number,
       require: true,
     },
+    size: {
+      type: Number,
+    },
     pay: {
       type: Boolean,
       require: true,
