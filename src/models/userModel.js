@@ -43,7 +43,7 @@ UserSchema.methods = {
     if (!password) return;
 
     try {
-      return createHmac("SHA256", "TeaHouse").update(password).digest("hex");
+      return createHmac("SHA256", "MYC").update(password).digest("hex");
     } catch (error) {
       console.log(error);
     }

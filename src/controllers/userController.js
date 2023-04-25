@@ -19,7 +19,6 @@ export const create = async (req, res) => {
 export const getAll = async (req, res) => {
   try {
     const users = await User.find().exec();
-
     res.json(users);
   } catch (error) {
     res.status(404).json({
@@ -86,7 +85,7 @@ export const changePassword = async (req, res) => {
       return;
     }
 
-    const passwordHash = createHmac("SHA256", "TeaHouse").update(newPassword).digest("hex");
+    const passwordHash = createHmac("SHA256", "MYC").update(newPassword).digest("hex");
     await User.findOneAndUpdate({ _id: id }, { password: passwordHash }).exec();
 
     res.json({
