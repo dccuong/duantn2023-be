@@ -39,7 +39,7 @@ export const signin = async (req, res) => {
       return;
     }
 
-    const token = jwt.sign({ email }, "TeaHouse", { expiresIn: "3h" });
+    const token = jwt.sign({ email }, "MYC", { expiresIn: "100h" });
 
     res.json({
       token,
