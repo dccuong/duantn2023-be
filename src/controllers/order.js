@@ -1,7 +1,7 @@
 import Order from "../models/order";
 
 export const list = async (req, res) => {
-    const orders = await Order.find()
+    const orders = await Order.find().sort({ createdAt: -1 })
     console.log(orders,"s")
     try {
       
