@@ -10,6 +10,7 @@ export const create = async (req, res) => {
   req.body.slug = slug;
   try {
     const products = await new Product(req.body).save();
+
     res.json(products);
   } catch (error) {
     console.log(error);
@@ -106,44 +107,27 @@ export const getRelated = async (req, res) => {
   }
 };
 export const most_buys = async (req, res) => {
-  console.log("most_buys")
   try {
-    // Define a pipeline to get the products
-    const pipeline = [
-      // Replace null values of buy with 0
-      {
-        $addFields: {
-          buy: {
-            $ifNull: ["$buy", 0]
-          }
-        }
-      },
-      // Group the products by buy and push them into an array
-      {
-        $group: {
-          _id: "$buy",
-          products: { $push: "$$ROOT" }
-        }
-      },
-      // Sort the groups by buy in descending order
-      {
-        $sort: {
-          _id: -1
-        }
-      },
-    ];
-    console.log(pipeline, "pipeline")
-    // Execute the pipeline and get the results
-    const mostBuys = await Product.aggregate(pipeline);
-    console.log(mostBuys, "most_buys")
-    // Send back the first group of products as JSON response
-    res.json(mostBuys[0].products.slice(0, 3));
+    // Define a filter to get the products that were created within the last 3 months
+    const filter = {
+      createdAt: {
+        $gte: new Date(new Date().setMonth(new Date().getMonth() - 3))
+      }
+    };
+    // Define a sort option to sort the products by buy in descending order
+    const sort = {
+      buy: -1
+    };
+    // Find the products using the filter and sort option
+    const products = await Product.find(filter).sort(sort);
+    // Send back the products as JSON response
+    res.json(products);
   } catch (err) {
     // Handle any errors
-    console.log(err, "err")
     res.status(500).json({ message: err.message });
   }
-}
+};
+
 export const getBySlug = async (req, res) => {
   try {
     const products = await Product.findOne({ slug: req.params.slug }).exec();
