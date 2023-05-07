@@ -6,8 +6,8 @@ const router = Router();
 
 router.get("/cateproduct", list);
 router.get("/cateproduct/:id", read);
-router.delete("/cateproduct/:id",  remove);
-router.post("/cateproduct",create);
-router.put("/cateproduct/:id", requireSignin, isAuth, isAdmin, update);
+router.delete("/cateproduct/:id", remove);
+router.post("/cateproduct", create);
+router.put("/cateproduct/:id", requireSignin, update);
 
 module.exports = router;
