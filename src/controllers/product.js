@@ -110,7 +110,7 @@ export const most_buys = async (req, res) => {
   try {
     // Define a filter to get the products that were created within the last 3 months
     const filter = {
-      createdAt: {
+      updatedAt: {
         $gte: new Date(new Date().setMonth(new Date().getMonth() - 3))
       }
     };

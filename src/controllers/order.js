@@ -65,3 +65,71 @@ export const getByUser = async (req, res) => {
         });
     }
 };
+export const get3mOrder =async (req, res) => {
+    try {
+      // Get current date
+      const currentDate = new Date();
+  
+      // Get first day of current month
+      const firstDayOfCurrentMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        1
+      );
+  
+      // Get first day of previous month
+      const firstDayOfPreviousMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 1,
+        1
+      );
+  
+      // Get first day of two months ago
+      const firstDayOfTwoMonthsAgo = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 2,
+        1
+      );
+  
+      // Aggregate orders by createdAt and totalPrice fields
+      const orders = await Order.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: firstDayOfTwoMonthsAgo, // Filter orders created in the last three months
+            },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              $dateToString: {
+                format: "%Y-%m", // Group orders by year and month
+                date: "$createdAt",
+              },
+            },
+            totalPrice: {
+              $sum: "$totalPrice", // Sum up the totalPrice of each group
+            },
+          },
+        },
+        {
+          $sort: {
+            _id: 1, // Sort by ascending order of year and month
+          },
+        },
+      ]);
+  
+      // Send response with orders data
+      res.status(200).json({
+        status: "success",
+        data: orders,
+      });
+    } catch (error) {
+      // Handle error
+      res.status(500).json({
+        status: "fail",
+        message: error.message,
+      });
+    }
+  }
