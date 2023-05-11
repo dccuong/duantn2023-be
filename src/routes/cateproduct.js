@@ -8,6 +8,6 @@ router.get("/cateproduct", list);
 router.get("/cateproduct/:id", read);
 router.delete("/cateproduct/:id", remove);
 router.post("/cateproduct", create);
-router.put("/cateproduct/:id", requireSignin, update);
+router.put("/cateproduct/:id", update);
 
 module.exports = router;
