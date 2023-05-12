@@ -69,34 +69,30 @@ export const get3mOrder =async (req, res) => {
     try {
       // Get current date
       const currentDate = new Date();
-  
       // Get first day of current month
       const firstDayOfCurrentMonth = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth(),
         1
       );
-  
       // Get first day of previous month
       const firstDayOfPreviousMonth = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth() - 1,
         1
       );
-  
       // Get first day of two months ago
       const firstDayOfTwoMonthsAgo = new Date(
         currentDate.getFullYear(),
         currentDate.getMonth() - 2,
         1
       );
-  
       // Aggregate orders by createdAt and totalPrice fields
       const orders = await Order.aggregate([
         {
           $match: {
             createdAt: {
-              $gte: firstDayOfTwoMonthsAgo, // Filter orders created in the last three months
+              $gte: firstDayOfTwoMonthsAgo, 
             },
           },
         },
@@ -104,23 +100,21 @@ export const get3mOrder =async (req, res) => {
           $group: {
             _id: {
               $dateToString: {
-                format: "%Y-%m", // Group orders by year and month
+                format: "%Y-%m", 
                 date: "$createdAt",
               },
             },
             totalPrice: {
-              $sum: "$totalPrice", // Sum up the totalPrice of each group
+              $sum: "$totalPrice", 
             },
           },
         },
         {
           $sort: {
-            _id: 1, // Sort by ascending order of year and month
+            _id: 1, 
           },
         },
       ]);
-  
-      // Send response with orders data
       res.status(200).json({
         status: "success",
         data: orders,
@@ -133,3 +127,106 @@ export const get3mOrder =async (req, res) => {
       });
     }
   }
+  export const get7dOrder = async (req, res) => {
+    try {
+      // Get current date
+      const currentDate = new Date();
+      // Get 7 days ago date
+      const sevenDaysAgo = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() - 7
+      );
+      // Aggregate orders by createdAt and totalPrice fields
+      const orders = await Order.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: sevenDaysAgo,
+            },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              $dateToString: {
+                format: "%Y-%m-%d",
+                date: "$createdAt",
+              },
+            },
+            totalPrice: {
+              $sum: "$totalPrice",
+            },
+          },
+        },
+        {
+          $sort: {
+            _id: 1,
+          },
+        },
+      ]);
+      res.status(200).json({
+        status: "success",
+        data: orders,
+      });
+    } catch (error) {
+      // Handle error
+      res.status(500).json({
+        status: "fail",
+        message: error.message,
+      });
+    }
+  };
+  export const getCustomOrder = async (req, res) => {
+    try {
+      // Get the date from the query string
+      const date = req.query.date;
+      // Convert the date to a Date object
+      const dateObj = new Date(date);
+      // Get the next day of the date
+      const nextDay = new Date(
+        dateObj.getFullYear(),
+        dateObj.getMonth(),
+        dateObj.getDate() + 1
+      );
+      // Aggregate orders by createdAt and totalPrice fields
+      const orders = await Order.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: dateObj,
+              $lt: nextDay,
+            },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              $dateToString: {
+                format: "%Y-%m-%d",
+                date: "$createdAt",
+              },
+            },
+            totalPrice: {
+              $sum: "$totalPrice",
+            },
+          },
+        },
+        {
+          $sort: {
+            _id: 1,
+          },
+        },
+      ]);
+      res.status(200).json({
+        status: "success",
+        data: orders,
+      });
+    } catch (error) {
+      // Handle error
+      res.status(500).json({
+        status: "fail",
+        message: error.message,
+      });
+    }
+  };
