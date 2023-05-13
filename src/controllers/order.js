@@ -185,7 +185,7 @@ export const get3mOrder =async (req, res) => {
       for (let date of dates) {
         const dateString = date.toISOString().slice(0, 10); // Format the date as YYYY-MM-DD
         result.push({
-          date: dateString,
+          _id: dateString,
           totalPrice: orderMap[dateString] || 0, // Use the orderMap value or zero if not found
         });
       }
