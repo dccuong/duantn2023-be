@@ -203,8 +203,8 @@ export const get3mOrder =async (req, res) => {
   };
   export const getCustomOrder = async (req, res) => {
     try {
-      // Get the date from the query string
-      const date = req.query.date;
+      // Get the date from the query string or use today's date
+      const date = req.query.date || new Date().toISOString().slice(0, 10);
       // Convert the date to a Date object
       const dateObj = new Date(date);
       // Get the next day of the date
