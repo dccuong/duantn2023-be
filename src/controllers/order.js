@@ -137,6 +137,16 @@ export const get3mOrder =async (req, res) => {
         currentDate.getMonth(),
         currentDate.getDate() - 7
       );
+      // Create an array of dates from 7 days ago to today
+      const dates = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(
+          sevenDaysAgo.getFullYear(),
+          sevenDaysAgo.getMonth(),
+          sevenDaysAgo.getDate() + i
+        );
+        dates.push(date);
+      }
       // Aggregate orders by createdAt and totalPrice fields
       const orders = await Order.aggregate([
         {
@@ -165,9 +175,23 @@ export const get3mOrder =async (req, res) => {
           },
         },
       ]);
+      // Map the orders to an object with date as key and totalPrice as value
+      const orderMap = {};
+      for (let order of orders) {
+        orderMap[order._id] = order.totalPrice;
+      }
+      // Create a new array of objects with date and totalPrice fields
+      const result = [];
+      for (let date of dates) {
+        const dateString = date.toISOString().slice(0, 10); // Format the date as YYYY-MM-DD
+        result.push({
+          date: dateString,
+          totalPrice: orderMap[dateString] || 0, // Use the orderMap value or zero if not found
+        });
+      }
       res.status(200).json({
         status: "success",
-        data: orders,
+        data: result,
       });
     } catch (error) {
       // Handle error
