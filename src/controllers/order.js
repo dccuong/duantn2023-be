@@ -242,6 +242,13 @@ export const get3mOrder =async (req, res) => {
           },
         },
       ]);
+      if (orders.length === 0) {
+        // Push a new object with the date and zero total price
+        orders.push({
+          _id: date,
+          totalPrice: 0,
+        });
+      }
       res.status(200).json({
         status: "success",
         data: orders,
